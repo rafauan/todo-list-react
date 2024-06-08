@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import TaskInput from './components/TaskInput';
+import TaskList from './components/TaskList';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -55,28 +57,19 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Lista TODO</h1>
-        <div className="input-container">
-          <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Dodaj nowe zadanie..."
-          />
-          <button onClick={addTask}>
-            {isEditing ? "Aktualizuj" : "Dodaj"}
-          </button>
-        </div>
-        <ul className="task-list">
-          {tasks.map((task, index) => (
-            <li key={index} className={`task-item ${isEditing && editIndex === index ? 'editing' : ''}`}>
-              {task}
-              <div>
-                <button onClick={() => editTask(index)} className="btnEdit">Edytuj</button>
-                <button onClick={() => confirmDelete(index)} className="btnDelete">Usuń</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <TaskInput
+          task={task}
+          setTask={setTask}
+          isEditing={isEditing}
+          addTask={addTask}
+        />
+        <TaskList
+          tasks={tasks}
+          editTask={editTask}
+          confirmDelete={confirmDelete}
+          isEditing={isEditing}
+          editIndex={editIndex}
+        />
       </header>
     </div>
   );
